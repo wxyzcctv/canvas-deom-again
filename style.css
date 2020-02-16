@@ -5,8 +5,17 @@ body{
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid red;
 }
-#eraser{
+.actions{
     position: fixed;
     left: 0;
     bottom: 0;
+}
+.actions > #bush{
+    display: none;
+}
+.actions.x >#bush{
+    display: inline-block;
+}
+.actions.x > #eraser{
+    display: none;
 }

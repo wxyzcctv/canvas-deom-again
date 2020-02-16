@@ -1,0 +1,7 @@
+body{
+    margin: 0;
+}
+#xxx{
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid red;
+}

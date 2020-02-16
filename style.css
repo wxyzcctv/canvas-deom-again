@@ -1,21 +1,59 @@
-body{
-    margin: 0;
+*{margin: 0;padding: 0;}
+ol,ul{list-style: none;}
+.icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
 }
 #xxx{
     background: rgba(255, 255, 255, 0.9);
-    border: 1px solid red;
 }
 .actions{
     position: fixed;
     left: 0;
-    bottom: 0;
+    top: 0;
+    padding: 20px;
 }
-.actions > #bush{
-    display: none;
+.actions > svg{
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0 10px;
+    transition: all 0.3s;
+
 }
-.actions.x >#bush{
-    display: inline-block;
+.actions > svg.active{
+    fill: red;
+    transform: scale(1.5);
 }
-.actions.x > #eraser{
-    display: none;
+.color{
+    position: fixed;
+    top: 60px;
+    left: 28px;
 }
+.color > li{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 10px 0;
+}
+.color > li.active{
+    transform: scale(1.2);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+}
+.color #black{
+    background: black;
+}
+.color #red{
+    background: red;
+}
+.color #green{
+    background: green;
+}
+.color #blue{
+    background: blue;
+}
+.color #yellow{
+    background: yellow;
+}
+

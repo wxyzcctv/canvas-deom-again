@@ -1,37 +1,48 @@
-// var canvas = document.getElementById('canvas');
-// canvas.onmousedown = function(a){
-//     var x = a.clientX;
-//     var y = a.clientY;
-//     var div = document.createElement('div');
-//     div.style = "position: absolute;width: 6px;"+
-//     "height: 6px;border-radius: 3px;background: black;"+
-//     "left: "+ (x-3) + "px;top: " + (y-3) + "px;"
-//     canvas.append(div)
-// }
 var yyy = document.getElementById('xxx');
+
+setCanvasSize()
+
+window.onresize = function(){
+    this.setCanvasSize()
+}
+
+function setCanvasSize(){
+    var pageWidth = document.documentElement.clientWidth
+    var pageHeight = document.documentElement.clientHeight
+
+    yyy.width = pageWidth
+    yyy.height =pageHeight
+}
 var context = yyy.getContext('2d')
-var painStart = false
+var using = false
 var lastPoint = {'x':undefined,'y':undefined}
 yyy.onmousedown = function(a){
-    painStart = true
     var x = a.clientX;
     var y = a.clientY;
-    lastPoint = {'x':x,'y':y}
-    // drawCricle(x,y,1)
-}
-yyy.onmousemove = function(a){
-
-    if(painStart){
-        var x = a.clientX;
-        var y = a.clientY;
-        var newPoint = {'x':x,'y':y};
-        // drawCricle(x,y,1)
-        drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
-        lastPoint = newPoint
+    using = true
+    if(eraserEable){
+        clearEabel(x,y)
+    }else{
+        lastPoint = {'x':x,'y':y}
+        drawCricle(x,y,2)
     }
 }
+yyy.onmousemove = function(a){
+    var x = a.clientX;
+    var y = a.clientY;
+    var newPoint = {'x':x,'y':y};
+    if(using){
+        if(eraserEable){
+            clearEabel(lastPoint.x,lastPoint.y)
+        }else{
+            drawCricle(x,y,2)
+            drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
+        }
+    }
+    lastPoint = newPoint
+}
 yyy.onmouseup = function(a){
-    painStart = false
+    using = false
 }
 function drawCricle(x,y,radius){
     context.beginPath();
@@ -47,4 +58,11 @@ function drawLine(x1,y1,x2,y2){
     context.lineTo(x2,y2)
     context.stroke()
     context.closePath()
+}
+var eraserEable = false
+eraser.onclick = function(){
+    eraserEable = !eraserEable
+}
+function clearEabel(x,y){
+    context.clearRect(x-5,y-5,10,10)
 }

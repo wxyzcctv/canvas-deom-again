@@ -5,7 +5,7 @@ var lastPoint = {'x':undefined,'y':undefined}
 
 autoSetCanvasSize(yyy)
 
-listenToMouse(yyy)
+listenToUser(yyy)
 
 var eraserEable = false
 eraser.onclick = function(){
@@ -51,33 +51,67 @@ function autoSetCanvasSize(canvas){
         canvas.height =pageHeight
     }
 }
-function listenToMouse(canvas){
-    canvas.onmousedown = function(a){
-        var x = a.clientX;
-        var y = a.clientY;
-        using = true
-        if(eraserEable){
-            clearEabel(x,y)
-        }else{
-            lastPoint = {'x':x,'y':y}
-            drawCricle(x,y,2)
-        }
-    }
-    canvas.onmousemove = function(a){
-        var x = a.clientX;
-        var y = a.clientY;
-        var newPoint = {'x':x,'y':y};
-        if(using){
+function listenToUser(canvas){
+    if(document.body.ontouchstart !== undefined){
+        // 触摸屏
+        canvas.ontouchstart = function(a){
+            var x = a.touches[0].clientX;
+            var y = a.touches[0].clientY;
+            using = true
             if(eraserEable){
-                clearEabel(lastPoint.x,lastPoint.y)
+                clearEabel(x,y)
             }else{
+                lastPoint = {'x':x,'y':y}
                 drawCricle(x,y,2)
-                drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
             }
         }
-        lastPoint = newPoint
+        canvas.ontouchmove = function(a){
+            var x = a.touches[0].clientX;
+            var y = a.touches[0].clientY;
+            var newPoint = {'x':x,'y':y};
+            if(using){
+                if(eraserEable){
+                    clearEabel(x,y)
+                }else{
+                    drawCricle(x,y,2)
+                    drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
+                }
+            }
+            lastPoint = newPoint
+        }
+        canvas.ontouchend = function(a){
+            using = false
+        }
+    }else{
+        // 是PC端
+        canvas.onmousedown = function(a){
+            var x = a.clientX;
+            var y = a.clientY;
+            using = true
+            if(eraserEable){
+                clearEabel(x,y)
+            }else{
+                lastPoint = {'x':x,'y':y}
+                drawCricle(x,y,2)
+            }
+        }
+        canvas.onmousemove = function(a){
+            var x = a.clientX;
+            var y = a.clientY;
+            var newPoint = {'x':x,'y':y};
+            if(using){
+                if(eraserEable){
+                    clearEabel(x,y)
+                }else{
+                    drawCricle(x,y,2)
+                    drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
+                }
+            }
+            lastPoint = newPoint
+        }
+        canvas.onmouseup = function(a){
+            using = false
+        }
     }
-    canvas.onmouseup = function(a){
-        using = false
-    }
+    
 }
